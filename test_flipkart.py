@@ -70,35 +70,35 @@ def test_setup():
 def test_CheckLoginText():
     login_text_element = driver.find_element(By.CLASS_NAME, "_36KMOx").find_element(By.TAG_NAME, "span")
 
-    if "Login" in login_text_element.text:
-        print("Passed: Login test")
-    else:
-        driver.save_screenshot("Selenium-test-programs/screenshots/check_login_text_failed.png")
-        print("Failed: Login test")
+    # if "Login" in login_text_element.text:
+    #     print("Passed: Login test")
+    # else:
+    #     driver.save_screenshot("Selenium-test-programs/screenshots/check_login_text_failed.png")
+    #     print("Failed: Login test")
     
-    return
+    assert "Login" == login_text_element.text
 
 def test_CheckUsernameField():
 
     try:
         username_field = driver.find_element(By.XPATH, "//span[text()='Enter Email/Mobile number']")
         print("Username check Passed")
+        assert True
     except NoSuchElementException:
         driver.save_screenshot("Selenium-test-programs/screenshots/check_username_field_failed.png")
         print("Username check failed")
-
-    return
+        assert True
 
 def test_CheckPasswordField():
 
     try:
         password_field = driver.find_element(By.XPATH, "//span[text()='Enter Password']").is_displayed()
         print("Password check Passed")
+        assert True
     except NoSuchElementException:
         driver.save_screenshot("Selenium-test-programs/screenshots/check_password_field_failed.png")
         print("Password check failed")
-
-    return
+        assert False
 
 
 
@@ -107,8 +107,10 @@ def test_ClickCloseButton():
     try:
         close_button = driver.find_element(By.XPATH,"//button[text()='✕']").click()
         print("Close Button Clicked")
+        assert True
     except NoSuchElementException:
         print("Close Button not found!")
+        assert False
 
 def test_VerifyTopCategories():
 
@@ -116,7 +118,7 @@ def test_VerifyTopCategories():
         top_categories_text = driver.find_element(By.CLASS_NAME, "_37M3Pb").find_elements(By.XPATH,"//div/a/div[2]")
 
         # print(top_categories_text)
-        top_categories_dict = {"Top Offers":1, "Mobiles & Tablets": 1,"Electronics": 1, "Fashion": 1, "Beauty": 1, "Home & Furniture": 1, "Appliances": 1, "Travel": 1, "Grocery": 1}
+        top_categories_dict = {"Top Offers":1, "Mobiles": 1,"Electronics": 1, "Fashion": 1, "Beauty": 1, "Home & Furniture": 1, "Appliances": 1, "Travel": 1, "Grocery": 1}
 
         for cat in top_categories_text:
             if cat.text != "":
@@ -125,30 +127,30 @@ def test_VerifyTopCategories():
                 else:
                     print("Top Categories Check failed! Extra Category found: " + cat.text)
                     driver.save_screenshot("Selenium-test-programs/screenshots/top_categories_check_failed.png")
-                    return 
+                    assert False
 
         if len(top_categories_dict.values()):
             driver.save_screenshot("Selenium-test-programs/screenshots/top_categories_check_failed.png")
             print("Top categories check failed! Categories not found: " + top_categories_dict.values())
-            return
+            assert False
 
         print("Top Categories check passed!")
 
     except NoSuchElementException:
         print("Top Categories not found!")
-
-    return
+        assert False
 
 def test_ClickMobileCategory():
 
     try:
-        mobile_category = driver.find_element(By.CLASS_NAME, "_37M3Pb").find_element(By.XPATH, "//div[2]/a/div[2][text()='Mobiles & Tablets']")
+        mobile_category = driver.find_element(By.CLASS_NAME, "_37M3Pb").find_element(By.XPATH, "//div[2]/a/div[2][text()='Mobiles']")
         mobile_category.click()
         print("Mobile Category Clicked")
+        assert True
     except NoSuchElementException:
         print("Mobile Category Not Found!")
+        assert False
 
-    return
 
 def test_ClickFirstPhone():
 
@@ -156,21 +158,21 @@ def test_ClickFirstPhone():
         first_phone = driver.find_element(By.CLASS_NAME, "_6t1WkM").find_element("xpath", "/html/body/div/div/div[3]/div[3]/div/div[1]")
         first_phone.click()
         print("First phone clicked")
+        assert True
     except NoSuchElementException:
         print("First phone element not found")
-
-    return
+        assert False
 
 def test_CheckFilterTitle():
 
     try:
         title_filter = driver.find_element(By.XPATH,"//section/div/div/span[text()='Filters']")
         print("Filter title passed")
+        assert True
     except NoSuchElementException:
         driver.save_screenshot("Selenium-test-programs/screenshots/filter_title_check_failed.png")
         print("Filter title failed")
-
-    return
+        assert False
 
 def test_SetPrice():
 
@@ -178,9 +180,11 @@ def test_SetPrice():
         price_field = Select(driver.find_element("xpath", "/html/body/div[1]/div/div[3]/div/div[1]/div/div[1]/div/section[2]/div[4]/div[3]/select"))
         price_field.select_by_visible_text("₹20000")
         print("Price field changed!")
+        assert True
     except NoSuchElementException:
         driver.save_screenshot("Selenium-test-programs/screenshots/set_price_check_failed.png")
         print("Price field not found!")
+        assert False
 
 def test_ScrollAndFindNeedHelp():
 
@@ -190,9 +194,11 @@ def test_ScrollAndFindNeedHelp():
         time.sleep(3)
 
         print("Need help passed")
+        assert True
 
     except NoSuchElementException:
         driver.save_screenshot("Selenium-test-programs/screenshots/need_help_check_failed.png")
-        print("Need Help failed!")   
+        print("Need Help failed!")
+        assert False   
 
 # start_flipkart_script()
